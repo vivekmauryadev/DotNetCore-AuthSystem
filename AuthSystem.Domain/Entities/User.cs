@@ -19,5 +19,8 @@ namespace AuthSystem.Domain.Entities
         public bool IsActive { get; set; } = true;
 
         public DateTime CreatedOn { get; set; }
+
+        public ICollection<UserRole> UserRoles { get; set; }
+            = new List<UserRole>();
     }
 }

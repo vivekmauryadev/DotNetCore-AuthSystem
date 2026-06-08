@@ -29,14 +29,14 @@ namespace AuthSystem.Persistence.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<UserRole>()
-                .HasOne(x => x.User)
-                .WithMany()
-                .HasForeignKey(x => x.UserId);
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(ur => ur.UserId);
 
             modelBuilder.Entity<UserRole>()
-                .HasOne(x => x.Role)
-                .WithMany()
-                .HasForeignKey(x => x.RoleId);
+                .HasOne(ur => ur.Role)
+                .WithMany(r => r.UserRoles)
+                .HasForeignKey(ur => ur.RoleId);
         }
     }
 }
