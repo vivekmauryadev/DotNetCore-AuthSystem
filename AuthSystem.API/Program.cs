@@ -1,3 +1,5 @@
+using AuthSystem.Application.Interfaces;
+using AuthSystem.Infrastructure.Services;
 using AuthSystem.Persistence.Context;
 using AuthSystem.Persistence.Seed;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<
+    IAuthService,
+    AuthService>();
 
 var app = builder.Build();
 

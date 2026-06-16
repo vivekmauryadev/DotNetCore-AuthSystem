@@ -9,17 +9,18 @@
   <ItemGroup>
     <ProjectReference Include="..\AuthSystem.Application\AuthSystem.Application.csproj" />
     <ProjectReference Include="..\AuthSystem.Domain\AuthSystem.Domain.csproj" />
+    <ProjectReference Include="..\AuthSystem.Persistence\AuthSystem.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="Services\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.19.1" />
   </ItemGroup>
 
 </Project>
