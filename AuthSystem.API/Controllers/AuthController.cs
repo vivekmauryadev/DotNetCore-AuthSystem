@@ -1,7 +1,9 @@
 ﻿using AuthSystem.Application.DTOs.Auth;
 using AuthSystem.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AuthSystem.API.Controllers
 {
@@ -51,6 +53,57 @@ namespace AuthSystem.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet("profile")]
+        [Authorize]
+        public IActionResult GetProfile()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var fullName = User.FindFirstValue(ClaimTypes.Name);
+            var role = User.FindFirstValue(ClaimTypes.Role);
+
+            return Ok(new
+            {
+                UserId = userId,
+                FullName = fullName,
+                Email = email,
+                Role = role
+            });
+        }
+
+        [HttpGet("admin")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminOnly()
+        {
+            return Ok(new
+            {
+                Message = "Welcome Admin! You have access to this resource."
+            });
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken(
+            [FromBody] RefreshTokenRequestDto request)
+        {
+            var response =
+                await _authService.RefreshTokenAsync(request);
+
+            return Ok(response);
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout(
+            [FromBody] RefreshTokenRequestDto request)
+        {
+            await _authService.RevokeRefreshTokenAsync(
+                request.RefreshToken);
+
+            return Ok(new
+            {
+                Message = "Logged out successfully."
+            });
         }
     }
 }

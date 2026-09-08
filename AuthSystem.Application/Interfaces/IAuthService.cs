@@ -14,5 +14,11 @@ namespace AuthSystem.Application.Interfaces
 
         Task<AuthResponseDto> LoginAsync(
             LoginRequestDto request);
+
+        Task<AuthResponseDto> RefreshTokenAsync(
+            RefreshTokenRequestDto request);
+
+        Task RevokeRefreshTokenAsync(
+            string refreshToken);
     }
 }

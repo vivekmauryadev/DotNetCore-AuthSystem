@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace AuthSystem.Application.DTOs.Auth
 {
-    public class AuthResponseDto
+    public class RefreshTokenRequestDto
     {
-        public string Token { get; set; } = string.Empty;
-
-        public DateTime Expiration { get; set; }
-
         public string RefreshToken { get; set; } = string.Empty;
-
-        public DateTime RefreshTokenExpiration { get; set; }
     }
 }

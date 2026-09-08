@@ -1,3 +1,4 @@
+using AuthSystem.API.Middleware;
 using AuthSystem.Application.Interfaces;
 using AuthSystem.Infrastructure.Services;
 using AuthSystem.Persistence.Context;
@@ -60,9 +61,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddScoped<
-    IAuthService,
-    AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAuthentication(
     JwtBearerDefaults.AuthenticationScheme)
@@ -90,7 +90,7 @@ builder.Services.AddAuthentication(
 });
 
 var app = builder.Build();
-
+app.UseMiddleware<GlobalExceptionMiddleware>();
 // Seed Roles
 using (var scope = app.Services.CreateScope())
 {
