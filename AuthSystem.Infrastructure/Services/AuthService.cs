@@ -33,16 +33,27 @@ namespace AuthSystem.Infrastructure.Services
         }
 
         public async Task<AuthResponseDto> RegisterAsync(
-            RegisterRequestDto request)
+    RegisterRequestDto request)
         {
-            var existingUser =
-                await _context.Users
-                    .FirstOrDefaultAsync(x =>
-                        x.Email == request.Email);
+            var existingUser = await _context.Users
+                .FirstOrDefaultAsync(x =>
+                    x.Email == request.Email);
 
             if (existingUser != null)
+            {
+                throw new ConflictException(
+                    "User with this email already exists.");
+            }
+
+            var role = await _context.Roles
+                .FirstOrDefaultAsync(x =>
+                    x.Name == request.RoleName);
+
+            if (role == null)
+            {
                 throw new BusinessException(
-                    "User already exists.");
+                    $"Role '{request.RoleName}' does not exist.");
+            }
 
             var user = new User
             {
@@ -51,30 +62,23 @@ namespace AuthSystem.Infrastructure.Services
                 PasswordHash =
                     BCrypt.Net.BCrypt.HashPassword(
                         request.Password),
-                CreatedOn = DateTime.UtcNow
+                CreatedOn = DateTime.UtcNow,
+                IsActive = true
             };
 
             _context.Users.Add(user);
+
             await _context.SaveChangesAsync();
 
-            var role = await _context.Roles
-                .FirstOrDefaultAsync(x =>
-                    x.Name == request.RoleName);
-
-            if (role != null)
+            _context.UserRoles.Add(new UserRole
             {
-                _context.UserRoles.Add(new UserRole
-                {
-                    UserId = user.Id,
-                    RoleId = role.Id
-                });
+                UserId = user.Id,
+                RoleId = role.Id
+            });
 
-                await _context.SaveChangesAsync();
-            }
+            await _context.SaveChangesAsync();
 
-            var token = await GenerateJwtToken(user);
-
-            return token;
+            return await GenerateJwtToken(user);
         }
 
         public async Task<AuthResponseDto> LoginAsync(

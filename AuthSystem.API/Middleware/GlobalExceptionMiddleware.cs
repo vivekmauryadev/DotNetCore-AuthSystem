@@ -42,9 +42,17 @@ namespace AuthSystem.API.Middleware
 
             var statusCode = exception switch
             {
-                BusinessException => StatusCodes.Status400BadRequest,
-                KeyNotFoundException => StatusCodes.Status404NotFound,
-                _ => StatusCodes.Status500InternalServerError
+                ConflictException =>
+                    StatusCodes.Status409Conflict,
+
+                BusinessException =>
+                    StatusCodes.Status400BadRequest,
+
+                KeyNotFoundException =>
+                    StatusCodes.Status404NotFound,
+
+                _ =>
+                    StatusCodes.Status500InternalServerError
             };
 
             context.Response.StatusCode = statusCode;

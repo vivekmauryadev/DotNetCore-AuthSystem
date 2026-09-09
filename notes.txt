@@ -1,0 +1,25 @@
+{
+  "fullName": "admin",
+  "email": "admin@gmail.com",
+  "password": "admin@123",
+  "roleName": "admin"
+}
+
+{
+  "email": "admin@gmail.com",
+  "password": "admin@123"
+}
+
+
+{
+  "email": "vivek.m@gmail.com",
+  "password": "vivek@123", 
+}
+
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc4ODg5MTcxOCwiaXNzIjoiQXV0aFN5c3RlbUFQSSIsImF1ZCI6IkF1dGhTeXN0ZW1DbGllbnQifQ.Tx7cLOtegBVgk3sOOUHCu5jYcsQKZBIb_QBfdaLoVcI",
+  "expiration": "2026-09-08T18:21:58.8585208Z",
+  "refreshToken": "/ArDjbx/40Ouyi4RAyaE5Q==",
+  "refreshTokenExpiration": "2026-09-15T17:21:58.8673667Z"
+}

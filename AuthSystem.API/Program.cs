@@ -1,8 +1,11 @@
 using AuthSystem.API.Middleware;
 using AuthSystem.Application.Interfaces;
+using AuthSystem.Application.Validators;
 using AuthSystem.Infrastructure.Services;
 using AuthSystem.Persistence.Context;
 using AuthSystem.Persistence.Seed;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,7 +14,13 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddFluentValidation(fv =>
+    {
+        fv.RegisterValidatorsFromAssemblyContaining<
+            RegisterRequestValidator>();
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -88,6 +97,9 @@ builder.Services.AddAuthentication(
                         builder.Configuration["Jwt:Key"]!))
         };
 });
+
+builder.Services.AddValidatorsFromAssemblyContaining<
+    RegisterRequestValidator>();
 
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionMiddleware>();

@@ -21,20 +21,13 @@ namespace AuthSystem.API.Controllers
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(
-            RegisterRequestDto request)
+            [FromBody] RegisterRequestDto request)
         {
-            try
-            {
-                var result =
-                    await _authService
-                        .RegisterAsync(request);
+            var response = await _authService.RegisterAsync(request);
 
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return StatusCode(
+                StatusCodes.Status201Created,
+                response);
         }
 
         [HttpPost("login")]

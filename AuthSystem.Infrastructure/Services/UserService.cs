@@ -1,4 +1,5 @@
-﻿using AuthSystem.Application.DTOs.Users;
+﻿using AuthSystem.Application.Common.Exceptions;
+using AuthSystem.Application.DTOs.Users;
 using AuthSystem.Application.Interfaces;
 using AuthSystem.Domain.Entities;
 using AuthSystem.Persistence.Context;
@@ -76,7 +77,7 @@ namespace AuthSystem.Infrastructure.Services
 
             if (emailExists)
             {
-                throw new InvalidOperationException(
+                throw new ConflictException(
                     "Email address is already registered with another user.");
             }
 
