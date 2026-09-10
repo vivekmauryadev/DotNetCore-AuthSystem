@@ -86,7 +86,8 @@ namespace AuthSystem.Infrastructure.Services
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(x =>
-                    x.Email == request.Email);
+                    x.Email == request.Email &&
+                    x.IsActive);
 
             if (user == null)
                 throw new BusinessException(

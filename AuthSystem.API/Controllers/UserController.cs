@@ -1,4 +1,5 @@
-﻿using AuthSystem.Application.DTOs.Users;
+﻿using AuthSystem.Application.DTOs;
+using AuthSystem.Application.DTOs.Users;
 using AuthSystem.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,11 +20,12 @@ namespace AuthSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers(
+            [FromQuery] UserFilterRequestDto request)
         {
-            var users = await _userService.GetAllUsersAsync();
+            var result = await _userService.GetAllUsersAsync(request);
 
-            return Ok(users);
+            return Ok(result);
         }
 
         [HttpGet("{id:int}")]
@@ -56,18 +58,16 @@ namespace AuthSystem.API.Controllers
             return Ok(user);
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var deleted = await _userService.DeleteUserAsync(id);
+            var result = await _userService.DeleteUserAsync(id);
 
-            if (!deleted)
-                return NotFound(new
-                {
-                    Message = "User not found."
-                });
-
-            return NoContent();
+            return Ok(new
+            {
+                message = "User deleted successfully.",
+                success = result
+            });
         }
     }
 }

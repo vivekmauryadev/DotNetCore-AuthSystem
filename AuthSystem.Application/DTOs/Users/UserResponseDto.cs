@@ -18,6 +18,10 @@ namespace AuthSystem.Application.DTOs.Users
 
         public DateTime CreatedOn { get; set; }
 
+        public DateTime? UpdatedOn { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
+
         public string Role { get; set; } = string.Empty;
     }
 }

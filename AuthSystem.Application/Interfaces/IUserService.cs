@@ -1,4 +1,5 @@
-﻿using AuthSystem.Application.DTOs.Users;
+﻿using AuthSystem.Application.DTOs;
+using AuthSystem.Application.DTOs.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace AuthSystem.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserResponseDto>> GetAllUsersAsync();
+        Task<PagedResponseDto<UserResponseDto>> GetAllUsersAsync(
+            UserFilterRequestDto request);
 
         Task<UserResponseDto?> GetUserByIdAsync(int id);
 

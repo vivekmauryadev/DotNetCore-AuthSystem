@@ -20,6 +20,10 @@ namespace AuthSystem.Domain.Entities
 
         public DateTime CreatedOn { get; set; }
 
+        public DateTime? UpdatedOn { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
+
         public ICollection<UserRole> UserRoles { get; set; }
             = new List<UserRole>();
     }
